@@ -1,0 +1,8 @@
+table,
+td,
+th {
+	border-style: solid !important;
+	border-color: greenyellow !important;
+	border-width: 2px !important;
+	text-align: center!important;
+}

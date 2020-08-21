@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link rel="stylesheet" href="game.css">
+	<title>Ship Locations</title>
+</head>
+
+<body>
+	<div class="container-fluid" id="app">
+		<h1>Players</h1>
+		<!-- Operador Elvis o ternario, viewer.email!= null ?:' ' (si no es null, muestra viewer.email )-> válido para null -->
+		<!-- No siempre el primero, es el "the viewer". Almaceno en viewer el player que coincide con valor del parámetro gp -->
+		<strong>{{viewer.email || 'Sin dato'}} (you) vs {{ otherPlayer.email || 'Sin dato'}} </strong>
+
+		<div class="row ">
+			<div class="col-6">
+				<h1>Ship Locations!</h1>
+				<table>
+					<thead>
+						<th></th>
+						<th v-for="columnHeader in columnHeaders">
+							{{columnHeader}}
+						</th>
+					</thead>
+
+					<tbody>
+						<tr v-for="rowHeader in rowHeaders">
+							<th>
+								{{rowHeader}}
+							</th>
+							<!-- Se puede implementar usando v- active vue con if-->
+							<!--Podemos poner la clase ship a columnHeader -->
+							<td v-for="columnHeader in columnHeaders">
+								<!-- tomo la letra y lo comparo con la fila-->
+								<!-- con valor de Fila(rowHeader) y Columna puedo armar el par FilaColumna(columnHeader)-->
+								<!-- uso código java script. Se muestra y ejecuta class="ship" si se cumple la condición-->
+								<!-- pongo <div> para poder darle estilo. <template> no muestra nada. Si pongo id dentro de <v-for>, voy a tener varios id, y eso no puede ser <template v-for="shipSalvoLocation in shipSalvoLocations">
+								Esto no funciona porque ahora shipSalvoLocations es un array de ojetos-> findIndex
+							    <div class="ship" v-if="shipLocations.indexOf(rowHeader+columnHeader) != -1 && shipSalvoLocations.indexOf(rowHeader+columnHeader) == -1 "></div>  -->
+
+								<div class="ship" v-if="shipLocations.indexOf(rowHeader+columnHeader) != -1 && getTurnoShipSalvo(rowHeader+columnHeader) == -1 "></div>
+								<div class="shipSalvo" v-if="shipLocations.indexOf(rowHeader+columnHeader) != -1 && getTurnoShipSalvo(rowHeader+columnHeader) != -1">
+									<strong>{{getTurnoShipSalvo(rowHeader+columnHeader)}}</strong>
+								</div>
+
+							</td>
+							<!--Hay varias maneras de hacerlo. Manual, desde html. -->
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="col-6">
+
+				<h1>Salvo Locations!</h1>
+				<table>
+					<thead>
+						<th></th>
+						<th v-for="columnHeader in columnHeaders">
+							{{columnHeader}}
+						</th>
+					</thead>
+
+					<tbody>
+						<tr v-for="rowHeader in rowHeaders">
+							<th>
+								{{rowHeader}}
+							</th>
+							<!-- Se puede implementar usando v- active vue con if-->
+							<!--Podemos poner la clase ship a columnHeader -->
+							<td v-for="columnHeader in columnHeaders">
+								<!-- tomo la letra y lo comparo con la fila-->
+								<!-- con valor de Fila(rowHeader) y Columna puedo armar el par FilaColumna(columnHeader)-->
+								<!-- uso código java script. Se muestra y ejecuta class="ship" si se cumple la condición-->
+								<!-- pongo <div> para poder darle estilo. <template> no muestra nada. Si pongo id dentro de <v-for>, voy a tener varios id, y eso no puede ser. 
+								Esto no funciona porque ahora shipSalvoLocations es un array de ojetos-> findIndex 
+								<div class="salvo" v-if="salvoLocations.indexOf(rowHeader+columnHeader) != -1">{{salvoLocations.turno}}</div>-->
+								<!-- Si existe el turno -->
+								<div class="salvo" v-if="getTurnoSalvo(rowHeader+columnHeader) != -1">
+									<!-- Vuelve a invocar a la función para mostrar el turno-->
+									<strong>{{getTurnoSalvo(rowHeader+columnHeader)}}</strong>
+								</div>
+							</td>
+							<!--Hay varias maneras de hacerlo. Manual, desde html. -->
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+	</div>
+
+	<!-- Optional JavaScript -->
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<!-- Cambio a versión de (versión delgada)slim.min a min para que tome 'get'-->
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+	<!-- Include the Vue library -->
+	<script src="https://unpkg.com/vue/dist/vue.js"> </script>
+	<!-- Carga script para acceder al listado de miembros de games, con datos desde mi localhost-->
+
+	<script src="game.js"></script>
+	<script src="moment.js"></script>
+</body>
+
+</html>
